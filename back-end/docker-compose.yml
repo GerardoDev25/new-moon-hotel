@@ -1,0 +1,63 @@
+version: "3.5"
+
+services:
+  fnkdasuksrwd:
+    image: node:16.5.0-alpine3.12
+
+    volumes:
+      - ./services/fnkdasuksrwd:/app
+
+    entrypoint: ["/bin/sh", "-c"]
+
+    command:
+      - |
+        cd /app
+        npm run dev
+
+    networks:
+      insertmendoza:
+        aliases:
+          - fnkdasuksrwd.insertmendoza.ar
+
+  wrqkgnvkidbd:
+    image: node:16.5.0-alpine3.12
+
+    volumes:
+      - ./services/wrqkgnvkidbd:/app
+
+    entrypoint: ["/bin/sh", "-c"]
+
+    command:
+      - |
+        cd /app
+        npm run dev
+
+    networks:
+      insertmendoza:
+        aliases:
+          - wrqkgnvkidbd.insertmendoza.ar
+
+  gateway:
+    image: node:16.5.0-alpine3.12
+
+    volumes:
+      - /home/gerardo/Escritorio/Personal  Project/new-moon-hotel/back-end/gateway:/app
+
+    entrypoint: ["/bin/sh", "-c"]
+
+    ports:
+      - 443:443
+
+    command:
+      - |
+        cd /app
+        npm run dev
+
+    networks:
+      insertmendoza:
+        aliases:
+          - gateway.hotel
+
+networks:
+  insertmendoza:
+    name: hotel_new
