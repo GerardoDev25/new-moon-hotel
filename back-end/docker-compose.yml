@@ -1,41 +1,33 @@
 version: "3.5"
 
 services:
-  fnkdasuksrwd:
-    image: node:16.5.0-alpine3.12
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis_hotel
+    # restart: always
 
-    volumes:
-      - ./services/fnkdasuksrwd:/app
-
-    entrypoint: ["/bin/sh", "-c"]
-
-    command:
-      - |
-        cd /app
-        npm run dev
+    expose:
+      - 6379
 
     networks:
-      insertmendoza:
-        aliases:
-          - fnkdasuksrwd.insertmendoza.ar
+      - hotel
 
-  wrqkgnvkidbd:
-    image: node:16.5.0-alpine3.12
+  db:
+    image: postgres:13-alpine
+    container_name: db_hotel
+    # restart: always
 
-    volumes:
-      - ./services/wrqkgnvkidbd:/app
+    env_file:
+      - ./environment/postgresql.env
 
-    entrypoint: ["/bin/sh", "-c"]
+    environment:
+      TZ: "America/Bolivia/La_Paz"
 
-    command:
-      - |
-        cd /app
-        npm run dev
+    expose:
+      - 5432
 
     networks:
-      insertmendoza:
-        aliases:
-          - wrqkgnvkidbd.insertmendoza.ar
+      - hotel
 
   gateway:
     image: node:16.5.0-alpine3.12
@@ -54,10 +46,10 @@ services:
         npm run dev
 
     networks:
-      insertmendoza:
+      hotel:
         aliases:
           - gateway.hotel
 
 networks:
-  insertmendoza:
+  hotel:
     name: hotel_new
