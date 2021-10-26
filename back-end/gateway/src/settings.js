@@ -1,27 +1,28 @@
 import dotenv from "dotenv";
+import { createClient } from "redis";
 
 dotenv.config();
 
-// import { createClient } from 'redis';
-
 export const key = process.env.KEY;
 export const cert = process.env.CERT;
+export const port = process.env.PORT || 443;
 
-// export const REDIS = {
-//     host: process.env.REDIS_HOST,
-//     port: process.env.REDIS_PORT,
-//     auth_pass: process.env.REDIS_PASS
-// };
+export const REDIS = {
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
+  auth_pass: process.env.REDIS_PASS,
+};
 
-// export const redisClient = createClient({
-//     host: REDIS.host,
-//     port: REDIS.port,
-//     auth_pass: REDIS.auth_pass
-// });
+export const redisClient = createClient({
+  host: REDIS.host,
+  port: REDIS.port,
+  auth_pass: REDIS.auth_pass,
+});
 
-// export const status = {
-//     success: 'success',
-//     error: 'error',
-// }
+export const status = {
+  success: "success",
+  error: "error",
+};
 
-// export const InternalError = "No podemos procesar tu solicitud en este momento";
+export const InternalError =
+  "No podemos procesar tu solicitud en este momento";
